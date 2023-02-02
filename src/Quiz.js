@@ -13,10 +13,18 @@ class Quiz extends Component {
   }
 
   showNextQuestion() {
-    this.setState({
-      ...this.state,
-      quiz_position: this.state.quiz_position + 1,
-    });
+    if (this.state.quiz_position > quizData.quiz_questions.length) {
+      this.setState({ ...this.state });
+    } else {
+      this.setState({
+        ...this.state,
+        quiz_position: this.state.quiz_position + 1,
+      });
+    }
+  }
+
+  handleResetClick() {
+    this.setState({ quiz_position: 1 });
   }
 
   render() {
@@ -32,7 +40,7 @@ class Quiz extends Component {
               }
               showNextQuestionHandler={this.showNextQuestion.bind(this)}
             />
-            <QuizEnd />
+            <QuizEnd resetClickHandler={this.handleResetClick.bind(this)} />
           </React.Fragment>
         ) : (
           <QuizQuestion
